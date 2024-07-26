@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Group;
 
 class Conversation extends Model
 {
@@ -28,5 +30,16 @@ class Conversation extends Model
     public function user2()
     {
         return $this->belongsTo(User::class, 'user_id2');
+    }
+
+    public static function getConversationsForSidebar(User $user)
+    {
+        $users = User::getUsersExceptUser($user);
+        $groups = Group::getGroupsForUser($user);
+        return $users->map(function (User $user) {
+            return $user->toConversationArray();
+        })->concat($groups->map(function (Group $group) {
+            return $group->toConversationArray();
+        }));
     }
 }
