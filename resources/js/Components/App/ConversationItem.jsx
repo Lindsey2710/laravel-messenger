@@ -2,7 +2,7 @@ import { Link } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
 import UserAvatar from './UserAvatar';
 import GroupAvatar from './GroupAvatar';
-import UserOptionsDropdown from './UserOptionDropdown';
+import UserOptionsDropdown from './UserOptionsDropdown';
 
 const ConversationItem = ({
     conversation,
@@ -45,7 +45,7 @@ const ConversationItem = ({
             }
         >
             {conversation.is_user && (
-                <userAvatar user={conversation} online={online} />
+                <UserAvatar user={conversation} online={online} />
             )}
             {conversation.is_group && <GroupAvatar />}
             <div

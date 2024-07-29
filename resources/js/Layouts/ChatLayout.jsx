@@ -1,3 +1,6 @@
+import ConversationItem from "@/Components/App/ConversationItem";
+import TextInput from "@/Components/TextInput";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
@@ -113,9 +116,9 @@ const ChatLayout = ({ children }) => {
                         </div>
                     </div>
                     <div className="p-3">
-                        <textInput
+                        <TextInput
                             onKeyUp={onSearch}
-                            placeholder="Filter users and groups"
+                            placeholder="Filter Users and Groups"
                             className="w-full"
                         />
                     </div>
