@@ -1,4 +1,4 @@
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, Transition, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { Fragment } from "react";
 import {
     EllipsisVerticalIcon,
@@ -21,7 +21,7 @@ export default function UserOptionsDropdown({ conversation }) {
             .then((res) => {
                 console.log(res.data);
             })
-            .cath((err) => {
+            .catch((err) => {
                 console.error(err);
             });
     };
@@ -37,11 +37,10 @@ export default function UserOptionsDropdown({ conversation }) {
             .then((res) => {
                 console.log(res.data);
             })
-            .cath((err) => {
+            .catch((err) => {
                 console.error(err);
             });
     };
-
 
     return (
         <div>
@@ -65,54 +64,55 @@ export default function UserOptionsDropdown({ conversation }) {
                             <MenuItem>
                                 {({ active }) => (
                                     <button
-                                        onClick={onBlockUser}
-                                        className={`${
+                                         onClick={onBlockUser}
+                                         className={`${
                                             active
-                                                ? "bg-black-30 text-white"
+                                                ? "bg-black/30 text-white"
                                                 : "text-gray-100"
-                                        } group flex w-full items center rounded-md px-2 py-2 text-sm`}
-                                    >
-                                        {conversation.blocked_at && (
-                                            <>
-                                                <LockOpenIcon className="w-4 h-4 mr-2" />
-                                                Unblock User
-                                            </>
-                                        )}
-                                        {!conversation.blocked_at && (
-                                            <>
-                                                <LockClosedIcon className="w-4 h-4 mr-2" />
-                                                Block User
-                                            </>
-                                        )}
-                                    </button>
+                                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                         >
+                                            {conversation.blocked_at && (
+                                                <>
+                                                    <LockOpenIcon className="w-4 h-4 mr-2" />
+                                                    Unblock User
+                                                </>
+                                            )}
+                                            {!conversation.blocked_at && (
+                                                <>
+                                                    <LockClosedIcon className="w-4 h-4 mr-2" />
+                                                    Block User
+                                                </>
+                                            )}
+                                         </button>
                                 )}
                             </MenuItem>
                         </div>
                         <div className="px-1 py-1">
                             <MenuItem>
-                                {({ active }) => (
+                            {({ active }) => (
                                     <button
-                                        onClick={changeUserRole}
-                                        className={`${
+                                         onClick={changeUserRole}
+                                         className={`${
                                             active
                                                 ? "bg-black/30 text-white"
                                                 : "text-gray-100"
-                                        } group flex w-full items center rounded-md px-2 py-2 text-sm`}
-                                    >
-                                        {conversation.is_admin && (
-                                            <>
-                                                <UserIcon className="w-4 h-4 mr-2" />
-                                                Make Regular User
-                                            </>
-                                        )}
-                                        {!conversation.is_admin && (
-                                            <>
-                                                <ShieldCheckIcon className="w-4 h-4 mr-2" />
-                                                Make Admin
-                                            </>
-                                        )}
-                                    </button>
+                                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                         >
+                                            {conversation.is_admin && (
+                                                <>
+                                                    <UserIcon className="w-4 h-4 mr-2" />
+                                                    Make Regular User
+                                                </>
+                                            )}
+                                            {!conversation.is_admin && (
+                                                <>
+                                                    <ShieldCheckIcon className="w-4 h-4 mr-2" />
+                                                    Make Admin
+                                                </>
+                                            )}
+                                         </button>
                                 )}
+
                             </MenuItem>
                         </div>
                     </MenuItems>
