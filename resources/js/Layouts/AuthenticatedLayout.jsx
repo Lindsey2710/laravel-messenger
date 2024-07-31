@@ -4,7 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
-import { useEventBus } from '@/EventBus';
+import { EventBusProvider, useEventBus } from '@/EventBus';
 
 export default function Authenticated({ header, children }) {
     const page= usePage();
@@ -44,10 +44,11 @@ export default function Authenticated({ header, children }) {
                     message:
                         message.message ||
                         `Shared ${
-                            message.attachments.length +
-                            "attachments"
+                            message.attachments.length === 1
+                            ? "an attachment"
+                            : message.attachments.length + " attachments"
                         }`,
-                }); 
+                });
             });
     });
     return () => {

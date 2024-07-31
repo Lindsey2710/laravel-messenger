@@ -31,7 +31,8 @@ const MessageInput = ({ conversation = null}) => {
         }
 
         setMessageSending(true);
-        axios.post(route('message.store'), formData, {
+        axios
+        .post(route('message.store'), formData, {
             onUploadProgress: (progressEvent) => {
                 const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
                 console.log(progress);

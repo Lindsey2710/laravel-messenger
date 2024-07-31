@@ -1,9 +1,10 @@
 import React from "react";
 
-export const EventBus = React.createContext();
+export const EventBusContext = React.createContext();
 
 export const EventBusProvider = ({ children }) => {
-    const[events, setEvents] = React.useState(null);
+    const[events, setEvents] = React.useState({});
+
 
     const emit = (name, data) => {
         if(events[name]) {
@@ -34,3 +35,4 @@ export const useEventBus = () => {
    return React.useContext(EventBusContext);
 };
 
+export default { EventBusProvider, useEventBus };
