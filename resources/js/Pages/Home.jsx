@@ -32,6 +32,10 @@ function Home({ selectedConversation = null, messages = null }) {
     };
 
     const loadMoreMessages = useCallback(() => {
+        if (noMoreMessages) {
+            return;
+        }
+
         const firstMessage = localMessages[0];
         axios
             .get(route("message.loadOlder", firstMessage.id))
@@ -54,7 +58,7 @@ function Home({ selectedConversation = null, messages = null }) {
 
             });
 
-    }, [localMessages]);
+    }, [localMessages, noMoreMessages]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -66,6 +70,9 @@ function Home({ selectedConversation = null, messages = null }) {
         }, 10);
 
        const offCreated = on('message.created', messageCreated);
+
+       setScrollFromBottom(0);
+       setNoMoreMessages(false);
 
        return () => {
         offCreated();
@@ -83,8 +90,7 @@ function Home({ selectedConversation = null, messages = null }) {
                 messagesCtrRef.current.offsetHeight -
                 scrollFromBottom;
         }
-
-        if(noMoreMessages) {
+        if (noMoreMessages) {
             return;
         }
 
@@ -97,7 +103,6 @@ function Home({ selectedConversation = null, messages = null }) {
                     rootMargin: "0px 0px 250px 0px",
                 }
         );
-
         if (loadMoreIntersect.current) {
             setTimeout(() => {
                 observer.observe(loadMoreIntersect.current);
@@ -107,7 +112,8 @@ function Home({ selectedConversation = null, messages = null }) {
         return () => {
             observer.disconnect();
         };
-    },[localMessages]);
+    }, [localMessages]);
+
 
 
     return (
