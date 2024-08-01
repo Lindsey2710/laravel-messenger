@@ -69,6 +69,11 @@ return [
             'key' => env('ABLY_KEY'),
         ],
 
+        'redis' => [
+            'driver' => 'redis',
+            'connection' => 'broadcasting',
+        ],
+
         'log' => [
             'driver' => 'log',
         ],
