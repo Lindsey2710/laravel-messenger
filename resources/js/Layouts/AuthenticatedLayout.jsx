@@ -14,10 +14,10 @@ export default function Authenticated({ header, children }) {
 
    useEffect(() => {
     conversations.forEach((conversation) => {
-        let channel = `message.group.$${conversation.id}`;
+        let channel = `message.group.${conversation.id}`;
 
         if (conversation.is_user) {
-            channel = `message.user.$${[
+            channel = `message.user.${[
                 parseInt(user.id),
                 parseInt(conversation.id),
 
@@ -50,9 +50,10 @@ export default function Authenticated({ header, children }) {
                 });
             });
     });
+
     return () => {
         conversations.forEach((conversation) => {
-            let channel = `message.group.$${conversation.id}`;
+            let channel = `message.group.${conversation.id}`;
 
             if (conversation.is_user) {
                 channel = `message.user.${[
@@ -62,7 +63,6 @@ export default function Authenticated({ header, children }) {
                     .sort((a, b) => a - b)
                     .join("-")}`;
             }
-
             Echo.leave(channel);
         });
     };

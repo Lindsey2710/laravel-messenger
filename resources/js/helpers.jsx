@@ -1,4 +1,4 @@
-export const formatMessageDateLog = (date) => {
+export const formatMessageDateLong = (date) => {
     const now = new Date();
     const inputDate = new Date(date);
 
@@ -9,7 +9,7 @@ export const formatMessageDateLog = (date) => {
         });
     } else if (isYesterday(inputDate)) {
         return (
-            "Yesterday" +
+            "Yesterday " +
             inputDate.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -36,7 +36,7 @@ export const formatMessageDateShort = (date) => {
             minute: "2-digit",
         });
     } else if (isYesterday(inputDate)) {
-        return ("Yesterday");
+        return "Yesterday";
 
     } else if (inputDate.getFullYear() === now.getFullYear()) {
         return inputDate.toLocaleDateString([], {

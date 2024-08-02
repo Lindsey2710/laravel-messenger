@@ -66,7 +66,6 @@ function Home({ selectedConversation = null, messages = null }) {
                 messagesCtrRef.current.scrollTop =
                     messagesCtrRef.current.scrollHeight;
             }
-
         }, 10);
 
        const offCreated = on('message.created', messageCreated);

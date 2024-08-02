@@ -20,9 +20,8 @@ const ChatLayout = ({ children }) => {
         const search = ev.target.value.toLowerCase();
         setLocalConversations(
             conversations.filter((conversation) => {
-                return (
-                    conversation.name.toLowerCase().includes(search)
-                );
+                return conversation.name.toLowerCase().includes(search);
+
             })
         );
     };
@@ -103,18 +102,14 @@ const ChatLayout = ({ children }) => {
             })
             .joining((user) => {
                 setOnlineUsers((prevOnlineUsers) => {
-                    const updatedUsers = {
-                        ...prevOnlineUsers,
-                    };
+                    const updatedUsers = { ...prevOnlineUsers };
                     updatedUsers[user.id] = user;
                     return updatedUsers;
                 });
             })
             .leaving((user) => {
                 setOnlineUsers((prevOnlineUsers) => {
-                    const updatedUsers = {
-                        ...prevOnlineUsers,
-                    };
+                    const updatedUsers = { ...prevOnlineUsers };
                     delete updatedUsers[user.id];
                     return updatedUsers;
                 });

@@ -11,7 +11,7 @@ const ConversationHeader = ({ selectedConversation }) => {
             <div className='p-3 flex justify-between items-center border-b border-slate-700'>
                 <div className='flex gap-3 items-center'>
                     <Link
-                        href={route('dashboard')}
+                        href={route("dashboard")}
                         className='inline-block sm:hidden'
                     >
                         <ArrowLeftIcon className='w-6' />
