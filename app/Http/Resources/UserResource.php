@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
+
 
 class UserResource extends JsonResource
 {
@@ -25,7 +26,7 @@ class UserResource extends JsonResource
             'updated_at' => $this->updated_at,
             'is_admin' => (bool) $this->is_admin,
             'last_message' => $this->last_message,
-            'last_message_date' => $this->last_message_date
+            'last_message_date' => $this->last_message_date,
         ];
     }
 }
