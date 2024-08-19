@@ -15,6 +15,7 @@ import { isAudio, isImage } from "@/helpers";
 import AttachmentPreview from "./AttachmentPreview";
 import CustomAudioPlayer from "./CostumAudioPlayer";
 import AudioRecorder from "./AudioRecorder";
+import { useEventBus } from "@/EventBus";
 
 
 const MessageInput = ({ conversation = null }) => {
