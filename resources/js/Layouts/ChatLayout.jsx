@@ -29,6 +29,7 @@ const ChatLayout = ({ children }) => {
     const messageCreated = (message) => {
         setLocalConversations((oldUsers) => {
             return oldUsers.map((u) => {
+                // If the message is for user
                 if (
                     message.receiver_id &&
                     !u.is_group &&
@@ -38,7 +39,7 @@ const ChatLayout = ({ children }) => {
                     u.last_message_date = message.created_at;
                     return u;
                 }
-
+                // If the message is for group
                 if (
                     message.group_id &&
                     u.is_group &&
@@ -53,10 +54,21 @@ const ChatLayout = ({ children }) => {
         });
     };
 
+    const messageDeleted = ({ prevMessage }) => {
+        if (!prevMessage) {
+            return;
+        }
+
+        // Find the conversation by prevMessage and update its last message and date
+        messageCreated(prevMessage);
+    };
+
     useEffect(() => {
         const offCreated = on("message.created", messageCreated);
+        const offDeleted = on("message.deleted", messageDeleted);
         return () => {
             offCreated();
+            offDeleted();
         };
     }, [on]);
 
