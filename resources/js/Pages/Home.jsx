@@ -65,8 +65,8 @@ function Home({ selectedConversation = null, messages = null }) {
 
     const onAttachmentClick = (attachments, ind) => {
         setPreviewAttachment({
-            attachments: Array.isArray(attachments) ? attachments : [],
-            ind: ind || 0,
+            attachments,
+            ind,
         });
         setShowAttachmentPreview(true);
     };
@@ -171,7 +171,7 @@ function Home({ selectedConversation = null, messages = null }) {
                 </>
             )}
 
-            {previewAttachment && (
+            {previewAttachment.attachments && (
                 <AttachmentPreviewModal
                     attachments={previewAttachment.attachments}
                     index={previewAttachment.ind}

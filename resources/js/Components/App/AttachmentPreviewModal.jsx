@@ -3,13 +3,13 @@ import {
     Dialog,
     DialogPanel,
     Transition,
-    TransitionChild,
+    TransitionChild
 } from "@headlessui/react";
 import {
     PaperClipIcon,
     XMarkIcon,
     ChevronLeftIcon,
-    ChevronRightIcon,
+    ChevronRightIcon
 } from "@heroicons/react/24/solid";
 import { isAudio, isImage, isPDF, isPreviewable, isVideo } from "@/helpers";
 
