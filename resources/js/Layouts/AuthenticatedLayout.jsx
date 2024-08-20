@@ -7,6 +7,7 @@ import { useEventBus } from "@/EventBus";
 import Toast from "@/Components/App/Toast";
 import NewMessageNotification from "@/Components/App/NewMessageNotification";
 
+
 export default function Authenticated({ header, children }) {
     const page = usePage();
     const user = page.props.auth.user;
@@ -27,6 +28,8 @@ export default function Authenticated({ header, children }) {
                     .sort((a, b) => a - b)
                     .join("-")}`;
             }
+            //console.log ("Start listening on channel", channel);
+
             Echo.private(channel)
                 .error((error) => {
                     console.error(error);
@@ -34,6 +37,8 @@ export default function Authenticated({ header, children }) {
                 .listen("SocketMessage", (e) => {
                     console.log("SocketMessage", e);
                     const message = e.message;
+                    // If the conversation with the sender is not selected
+                    // then show a notification
 
                     emit("message.created", message);
                     if (message.sender_id === user.id) {
@@ -52,6 +57,18 @@ export default function Authenticated({ header, children }) {
                             }`,
                     });
                 });
+
+            if (conversation.is_group) {
+                Echo.private(`group.deleted.${conversation.id}`)
+                    .listen("GroupDeleted", (e) => {
+                    console.log("GroupDeleted", e);
+                    debugger;
+                    emit("group.deleted", { id: e.id, name: e.name });
+                })
+                    .error((e) => {
+                    console.error(e);
+                });
+            }
         });
 
         return () => {
@@ -67,6 +84,10 @@ export default function Authenticated({ header, children }) {
                         .join("-")}`;
                 }
                 Echo.leave(channel);
+
+                if (conversation.is_group) {
+                    Echo.leave(`group.deleted.${conversation.id}`);
+                }
             });
         };
     }, [conversations]);
