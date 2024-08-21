@@ -15,9 +15,13 @@ const ConversationHeader = ({ selectedConversation }) => {
         if (!window.confirm('Are you sure you want to delete this group?')) {
             return;
         }
-        axios.delete(route("group.destroy", selectedConversation.id)).then(() => {
-            console.log(res)
-        }).catch((err) => {
+        axios
+        .delete(route("group.destroy", selectedConversation.id))
+        .then((res) => {
+            console.log(res);
+            emit("toast.show", res.data.message);
+        })
+        .catch((err) => {
             console.log(err)
         });
     }

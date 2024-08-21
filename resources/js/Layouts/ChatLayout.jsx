@@ -14,7 +14,7 @@ const ChatLayout = ({ children }) => {
     const [sortedConversations, setSortedConversations] = useState([]);
     const [onlineUsers, setOnlineUsers] = useState({});
     const [showGroupModal, setShowGroupModal] = useState(false);
-    const { on } = useEventBus();
+    const { emit, on } = useEventBus();
 
     const isUserOnline = (userId) => onlineUsers[userId];
 
@@ -76,10 +76,10 @@ const ChatLayout = ({ children }) => {
                 return oldConversations.filter((con) => con.id != id);
             });
 
-            emit('toast.show', `Group ${name} was deleted`);
+            emit('toast.show', `Group "${name}" was deleted`);
 
             if (
-                selectedConversation &&
+                !selectedConversation ||
                 selectedConversation.is_group &&
                 selectedConversation.id == id
             ) {
