@@ -58,6 +58,7 @@ jobs:
          key: ${{ secrets.SSH_KEY }}
          script_stop: true
          script: |
+           su - lindsey
            cd htdocs/larachat.linkatver.com
            git checkout main
            if git rev-parse -q --verify "refs/tags/${{ github.event.release.tag_name }}";
