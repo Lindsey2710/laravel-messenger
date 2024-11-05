@@ -50,12 +50,13 @@ jobs:
 
       - name: Deploy to server
         if: ${{ success() }}
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.0
         with:
          host: ${{ secrets.SSH_HOST }}
          username: ${{ secrets.SSH_USERNAME }}
          port: ${{ secrets.SSH_PORT }}
          key: ${{ secrets.SSH_KEY }}
+         fingerprint: ''
          script_stop: true
          script: |
            su - lindsey -c "
