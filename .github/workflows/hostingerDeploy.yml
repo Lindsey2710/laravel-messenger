@@ -3,7 +3,7 @@ name: HostingerDeploy
 on:
   push:
     branches:
-      -'main'
+      - main
   release:
     types: [created]
 
@@ -52,14 +52,12 @@ jobs:
         if: ${{ success() }}
         uses: appleboy/ssh-action@master
         with:
-         host: ${{ secrets.SSH_HOST }}
-         username: ${{ secrets.SSH_USERNAME }}
-         port: ${{ secrets.SSH_PORT }}
-         key: ${{ secrets.SSH_KEY }}
-         fingerprint: ''
-         script_stop: true
-         script: |
-           cd htdocs/larachat.linkatver.com
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd htdocs/larachat.linkatver.com
             git checkout main
             if git rev-parse -q --verify "refs/tags/${{ github.event.release.tag_name }}";
             then
@@ -67,7 +65,7 @@ jobs:
             fi
             git fetch --all
             git checkout ${{ github.event.release.tag_name }}
-            composer install
+            composer install --no-interaction --no-dev --prefer-dist
             npm ci
             npm run build
             php artisan migrate --force
