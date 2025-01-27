@@ -1,0 +1,68 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/var/www
+            - /var/www/vendor  # Persist vendor directory
+            - /var/www/node_modules  # Persist node_modules
+        networks:
+            - app-network
+        depends_on:
+            db:
+                condition: service_healthy
+        ports:
+            - "4000:4000"
+
+    nginx:
+        image: nginx:alpine
+        ports:
+            - "8000:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - app-network
+        depends_on:
+            - app
+
+    db:
+        image: mysql:8.0
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+        ports:
+            - "3308:3306"
+        networks:
+            - app-network
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
+
+    websockets:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: php artisan websockets:serve --port=8080
+        ports:
+            - "8080:8080"
+        environment:
+            - LARAVEL_WEBSOCKETS_PORT=8080
+        networks:
+            - app-network
+        depends_on:
+            - app
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    dbdata:
+        driver: local 
